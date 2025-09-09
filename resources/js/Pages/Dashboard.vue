@@ -26,5 +26,13 @@ import { Head } from '@inertiajs/vue3';
                 </div>
             </div>
         </div>
+
+         <v-app>
+                <v-main>
+                    <v-container>
+                        <v-btn color="primary">Hello Vuetify</v-btn>
+                    </v-container>
+                </v-main>
+            </v-app>
     </AuthenticatedLayout>
 </template>
