@@ -1,4 +1,8 @@
 import '../css/app.css';
+import '../css/style.css';
+import'../lib/slick/slick.css';
+import'../lib/slick/slick-theme.css';
+
 import './bootstrap';
 
 import { createInertiaApp } from '@inertiajs/vue3';
@@ -10,6 +14,10 @@ import { createVuetify } from 'vuetify';
     import 'vuetify/styles'; // Import Vuetify styles
     import * as components from 'vuetify/components';
     import * as directives from 'vuetify/directives';
+
+import 'bootstrap/dist/css/bootstrap.css';
+
+                                                                                                                    
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
@@ -31,6 +39,7 @@ createInertiaApp({
             .use(plugin)
             .use(ZiggyVue)
             .use(vuetify)
+            .use(BootstrapVueNext)
             .mount(el);
     },
     progress: {

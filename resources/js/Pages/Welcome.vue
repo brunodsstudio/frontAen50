@@ -1,6 +1,6 @@
 <script setup>
 import { Head, Link } from '@inertiajs/vue3';
-
+import GuestLayout from '@/Layouts/GuestLayout.vue';
 defineProps({
     canLogin: {
         type: Boolean,
@@ -28,6 +28,7 @@ function handleImageError() {
 
 <template>
     <Head title="Welcome" />
+
     <div class="bg-gray-50 text-black/50 dark:bg-black dark:text-white/50">
         <img
             id="background"
@@ -383,4 +384,5 @@ function handleImageError() {
             </div>
         </div>
     </div>
+
 </template>

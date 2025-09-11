@@ -4,7 +4,22 @@ import { Link } from '@inertiajs/vue3';
 </script>
 
 <template>
+
+
   <v-app>
+
+    
+
+<v-app-bar app color="warning" dark>
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+      <v-toolbar-title>My Application</v-toolbar-title>
+       <v-btn icon>
+        <v-icon>mdi-magnify</v-icon>
+      </v-btn>
+      <v-btn icon>
+        <v-icon>mdi-dots-vertical</v-icon>
+      </v-btn>
+    </v-app-bar>
     <v-navigation-drawer v-model="drawer" app>
       <v-list>
         <v-list-item>
@@ -32,16 +47,13 @@ import { Link } from '@inertiajs/vue3';
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar app color="primary" dark>
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-toolbar-title>My Application</v-toolbar-title>
-    </v-app-bar>
+    
 
     <v-main>
       <slot />
     </v-main>
 
-    <v-footer app color="primary" dark>
+    <v-footer app color="warning" dark>
       <span class="white--text">&copy; 2024 My Application</span>
     </v-footer>
   </v-app>

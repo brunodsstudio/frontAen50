@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: frontaen50
+    container_name: frontaen50
+    restart: unless-stopped
+    working_dir: /var/www/html
+    #command: bash -c "php artisan migrate"
+   
+    volumes:
+      - .:/var/www/html
+    ports:
+          - '8000:8000'
+  
