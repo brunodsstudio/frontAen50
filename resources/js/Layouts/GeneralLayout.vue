@@ -4,59 +4,45 @@ import { Link } from '@inertiajs/vue3';
 </script>
 
 <template>
+ <!-- Top Header Start -->
+        <header class="text-white">
+        <div class="container text-center">
+            <div class="header_img"> </div>
+        </div>
+    </header>
+        <!-- Top Header End -->
 
 
-  <v-app>
+        <!-- Header Start -->
+        <div class="header">
+             <nav class="absolute top-0 border-solid border-gray-200 w-full border-b py-3 bg-darkred z-50 bg-inherit">
+        <div class="container mx-auto" style="height: 20px !important;">
+          <div class="w-full flex flex-col lg:flex-row w-full">
+            <div class="flex justify-between lg:flex-row w-full">
+              <ul class="flex items-center mx-auto gap-2">
+                <li>
+                  <a href="javascript:;" class="flex items-center justify-between text-yellow-500 text-sm lg:text-base font-medium hover:text-indigo-700 transition-all duration-500 mb-2 lg:mr-6 md:mb-0 md:mr-3">Home</a>
+                </li>
+                <li>
+                  <a href="javascript:;" class="flex items-center justify-between text-yellow-500  text-sm lg:text-base font-medium hover:text-indigo-700 transition-all duration-500 mb-2 lg:mr-6 md:mb-0 md:mr-3">About us</a>
+                </li>
+                <li>
+                  <a href="javascript:;" class="flex items-center justify-between text-yellow-500  text-sm lg:text-base font-medium hover:text-indigo-700 transition-all duration-500 mb-2 lg:mr-6 md:mb-0 md:mr-3">product</a>
+                </li>
+                <li>
+                  <a href="javascript:;" class="flex items-center justify-between text-yellow-500  text-sm lg:text-base font-medium hover:text-indigo-700 transition-all duration-500 mb-2 lg:mr-6 md:mb-0 md:mr-3">Features</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </nav>
+                                                  
+        </div>
+        <!-- Header End -->
 
-    
-
-<v-app-bar app color="warning" dark>
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-toolbar-title>My Application</v-toolbar-title>
-       <v-btn icon>
-        <v-icon>mdi-magnify</v-icon>
-      </v-btn>
-      <v-btn icon>
-        <v-icon>mdi-dots-vertical</v-icon>
-      </v-btn>
-    </v-app-bar>
-    <v-navigation-drawer v-model="drawer" app>
-      <v-list>
-        <v-list-item>
-          <v-list-item-content>
-            <v-list-item-title class="text-h6">
-              <Link href="/">
-                <ApplicationLogo class="h-10 w-10 fill-current text-gray-500" />
-              </Link>
-            </v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-
-        <v-divider></v-divider>
-
-        <v-list-item link>
-          <v-list-item-icon>
-            <v-icon>mdi-home</v-icon>
-          </v-list-item-icon>
-          <v-list-item-content>
-            <Link href="/">Home</Link>
-          </v-list-item-content>
-        </v-list-item>
-
-        <!-- Add more navigation items here -->
-      </v-list>
-    </v-navigation-drawer>
-
-    
-
-    <v-main>
-      <slot />
-    </v-main>
-
-    <v-footer app color="warning" dark>
-      <span class="white--text">&copy; 2024 My Application</span>
-    </v-footer>
-  </v-app>
+                                         
+<slot/>
 </template>
 
 <script>

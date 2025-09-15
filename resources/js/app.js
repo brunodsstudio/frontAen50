@@ -5,6 +5,9 @@ import'../lib/slick/slick-theme.css';
 
 import './bootstrap';
 
+import $ from 'jquery';
+
+
 import { createInertiaApp } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { createApp, h } from 'vue';
@@ -17,7 +20,7 @@ import { createVuetify } from 'vuetify';
 
 import 'bootstrap/dist/css/bootstrap.css';
 
-                                                                                                                    
+window.jQuery = $; // Makes jQuery available globally                                                                                                              
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
@@ -39,7 +42,6 @@ createInertiaApp({
             .use(plugin)
             .use(ZiggyVue)
             .use(vuetify)
-            .use(BootstrapVueNext)
             .mount(el);
     },
     progress: {

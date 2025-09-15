@@ -220,15 +220,10 @@ button.btn:hover {
 /**********************************/
 /********* Header Nav CSS *********/
 /**********************************/
-header{
-     background-image: url(/images/site_header.jpg);
-     background-repeat: repeat;
-}
-
 .header {
     position: relative;
     box-shadow: 0 2px 5px rgba(0, 0, 0, .3);
-   
+    background-image: url(/images/site_header.jpg);
 }
 
 .header.header-sticky {
@@ -254,7 +249,6 @@ header{
 .navbar-dark .navbar-nav .nav-link:hover,
 .navbar-dark .navbar-nav .nav-link.active {
     background: rgba(228, 122, 46, .2);
-    
     border-bottom: 2px solid #E47A2E;
     transition: none;
 }
@@ -266,7 +260,37 @@ header{
     background: #f8f9fa;
 }
 
+@media (min-width: 768px) {
+    .header,
+    .header .navbar {
+        background: #353535 !important;
+    }
+    
+    .header .navbar-brand {
+        display: none;
+    }
+    
+    .header a.nav-link {
+        padding: 8px 15px;
+        font-size: 15px;
+        text-transform: uppercase;
+    }
+}
 
+@media (max-width: 768px) {   
+    .header,
+    .header .navbar {
+        background: #333333 !important;
+    }
+    
+    .header a.nav-link {
+        padding: 5px;
+    }
+    
+    .header .dropdown-menu {
+        box-shadow: none;
+    }
+}
 
 
 /**********************************/
@@ -1040,92 +1064,3 @@ header{
         text-align: center; 
     } 
 }
-
-    
-    .header_img {
-        min-height: 123px;
-        width: 381px;
-        margin-left: 32%;
-        background-image: url(/images/logo_geekx_c.png);
-        
-    }
-
-    .text-center {
-    text-align: center !important;
-    }
-
-    @media (min-width: 1200px) {
-        .container, .container-sm, .container-md, .container-lg, .container-xl {
-            max-width: 1140px;
-        }
-
-        .navbar-expand-lg {
-        -ms-flex-flow: row nowrap;
-        flex-flow: row nowrap;
-        -ms-flex-pack: start;
-        justify-content: flex-start;
-    }
-    }
-    @media (min-width: 992px) {
-        .container, .container-sm, .container-md, .container-lg {
-            max-width: 960px;
-        }
-
-        .navbar-expand-lg {
-        -ms-flex-flow: row nowrap;
-        flex-flow: row nowrap;
-        -ms-flex-pack: start;
-        justify-content: flex-start;
-    }
-    }
-    @media (min-width: 768px) {
-
-        .header,
-    .header .navbar {
-        background: #790017 !important;
-    }
-    
-    .header .navbar-brand {
-        display: none;
-    }
-    
-    .header a.nav-link {
-        padding: 8px 15px;
-        font-size: 15px;
-        text-transform: uppercase;
-    }
-
-        .container, .container-sm, .container-md {
-            max-width: 720px;
-        }
-
-         .navbar-expand-lg {
-        -ms-flex-flow: row nowrap;
-        flex-flow: row nowrap;
-        -ms-flex-pack: start;
-        justify-content: flex-start;
-    }
-    }
-
-    
-
-@media (max-width: 768px) {   
-    .header,
-    .header .navbar {
-        background:#790017 !important;
-    }
-    
-    .header a.nav-link {
-        padding: 5px;
-    }
-    
-    .header .dropdown-menu {
-        box-shadow: none;
-    }
-}
-
-.bg-darkred {
-    background-color: #790017 !important;
-}
-
-
