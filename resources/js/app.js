@@ -5,7 +5,7 @@ import'../lib/slick/slick-theme.css';
 
 import './bootstrap';
 
-import $ from 'jquery';
+//import $ from 'jquery';
 
 
 import { createInertiaApp } from '@inertiajs/vue3';

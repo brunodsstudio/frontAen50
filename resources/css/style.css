@@ -9,8 +9,12 @@ body {
 }
 
 a {
+    font-family: 'Kdam Thmor Pro', sans-serif;
     color: #E47A2E;
     transition: 0.5s;
+    text-decoration: none;
+    
+
 }
 
 a:hover,
@@ -33,6 +37,7 @@ h3,
 h4,
 h5,
 h6 {
+    font-family: 'Kdam Thmor Pro', sans-serif;
     color: #353535;
     margin: 0 0 15px 0;
     padding: 0;
@@ -279,7 +284,7 @@ header{
 }
 
 .top-news .col-md-6 {
-    margin-bottom: 30px;
+    margin-bottom: 3px;
 }
 
 .top-news .tn-img {
@@ -1034,21 +1039,27 @@ header{
     color: #ffffff;
 }
 
-@media (max-width: 768.98px) {
-    .footer-bottom .copyright,
-    .footer-bottom .template-by {
-        text-align: center; 
-    } 
-}
-
-    
-    .header_img {
+.header_img {
         min-height: 123px;
         width: 381px;
         margin-left: 32%;
         background-image: url(/images/logo_geekx_c.png);
         
     }
+
+@media (max-width: 768.98px) {
+        .header_img {
+       margin-left: 32%;
+    }
+
+
+    .footer-bottom .copyright,
+    .footer-bottom .template-by {
+        text-align: center; 
+    } 
+}
+
+   
 
     .text-center {
     text-align: center !important;
@@ -1070,7 +1081,9 @@ header{
         .container, .container-sm, .container-md, .container-lg {
             max-width: 960px;
         }
-
+        .header_img {
+           
+        }
         .navbar-expand-lg {
         -ms-flex-flow: row nowrap;
         flex-flow: row nowrap;
@@ -1079,6 +1092,10 @@ header{
     }
     }
     @media (min-width: 768px) {
+
+        .header_img {
+        
+    }
 
         .header,
     .header .navbar {
@@ -1107,25 +1124,32 @@ header{
     }
     }
 
-    
+    @media (max-width: 768px) {   
+        .header,
+        .header .navbar {
+            background:#790017 !important;
+        }
+        
+        .header a.nav-link {
+            padding: 5px;
+        }
+        
+        .header .dropdown-menu {
+            box-shadow: none;
+        }
+    }
 
-@media (max-width: 768px) {   
-    .header,
-    .header .navbar {
-        background:#790017 !important;
+    @media (max-width: 500px) {   
+        .header_img {
+             margin-left: 0px;
+        }
     }
-    
-    .header a.nav-link {
-        padding: 5px;
-    }
-    
-    .header .dropdown-menu {
-        box-shadow: none;
-    }
-}
 
 .bg-darkred {
     background-color: #790017 !important;
 }
+
+ 
+    
 
 
