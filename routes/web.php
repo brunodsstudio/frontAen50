@@ -21,6 +21,10 @@ Route::get('/home', function () {
     return Inertia::render('Home');
 })->name('home');
 
+Route::get('/imgEditor', function () {
+    return Inertia::render('ImgEditor');
+})->name('imgEditor');
+
 
 Route::middleware([RequireJwt::class])->group(function () {
     Route::get('/dashboard', fn() => Inertia::render('Dashboard'))->name('dashboard');
