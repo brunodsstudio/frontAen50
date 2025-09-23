@@ -25,6 +25,19 @@ Route::get('/imgEditor', function () {
     return Inertia::render('ImgEditor');
 })->name('imgEditor');
 
+/*
+Route::get('/admin/crop', function () {
+    return Inertia::render('Cropper');
+})->name('crop');*/
+
+Route::group(['prefix' => 'admin'], function () {
+    Route::get('/crop', function () {
+        return Inertia::render('Cropper');
+    })->name('crop');
+});
+
+
+
 
 Route::middleware([RequireJwt::class])->group(function () {
     Route::get('/dashboard', fn() => Inertia::render('Dashboard'))->name('dashboard');

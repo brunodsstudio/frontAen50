@@ -15,6 +15,14 @@ class HandleInertiaRequests extends Middleware
      */
     protected $rootView = 'app';
 
+    public function rootView(Request $request) {
+        if ($request->route()->getPrefix() == "/admin") {
+            return "app"; // Or your specific admin root view
+        } else {
+            return "app"; // Or your default app root view
+        }
+    }
+
     /**
      * Determine the current asset version.
      */

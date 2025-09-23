@@ -1,11 +1,11 @@
-import '../css/app.css';
+/*import '../css/app.css';
 import '../css/style.css';
 import'../lib/slick/slick.css';
-import'../lib/slick/slick-theme.css';
+import'../lib/slick/slick-theme.css';*/
 
 import './bootstrap';
 
-import $ from 'jquery';
+//import $ from 'jquery';
 
 
 import { createInertiaApp } from '@inertiajs/vue3';
@@ -13,21 +13,21 @@ import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { createApp, h } from 'vue';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy';
 
-import { createVuetify } from 'vuetify';
-    import 'vuetify/styles'; // Import Vuetify styles
-    import * as components from 'vuetify/components';
-    import * as directives from 'vuetify/directives';
+//import { createVuetify } from 'vuetify';
+    //import 'vuetify/styles'; // Import Vuetify styles
+   // import * as components from 'vuetify/components';
+   // import * as directives from 'vuetify/directives';
 
-import 'bootstrap/dist/css/bootstrap.css';
+//import 'bootstrap/dist/css/bootstrap.css';
 
-window.jQuery = $; // Makes jQuery available globally                                                                                                              
+//window.jQuery = $; // Makes jQuery available globally                                                                                                              
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
-const vuetify = createVuetify({
+/*const vuetify = createVuetify({
         components,
         directives,
-    });
+    });*/
 
 
 createInertiaApp({
@@ -41,10 +41,10 @@ createInertiaApp({
         return createApp({ render: () => h(App, props) })
             .use(plugin)
             .use(ZiggyVue)
-           .use(vuetify)
+           
             .mount(el);
     },
     progress: {
         color: '#4B5563',
     },
-}); // .
+}); // .use(vuetify)
