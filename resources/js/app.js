@@ -9,6 +9,7 @@ import $ from 'jquery';
 
 
 import { createInertiaApp } from '@inertiajs/vue3';
+import { renderToString } from '@vue/server-renderer';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { createApp, h } from 'vue';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy';
@@ -31,6 +32,7 @@ const vuetify = createVuetify({
 
 
 createInertiaApp({
+    render: renderToString,
     title: (title) => `${title} - ${appName}`,
     resolve: (name) =>
         resolvePageComponent(

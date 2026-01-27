@@ -10,12 +10,25 @@ body {
 
 a {
     font-family: 'Kdam Thmor Pro', sans-serif;
-    color: #E47A2E;
-    transition: 0.5s;
-    text-decoration: none;
     
-
+    transition: 0.5s;
+    text-decoration: none !important;
 }
+
+.aMenu {
+    font-family: 'Kdam Thmor Pro', sans-serif;
+     color: rgb(246 230 6) !important;
+    transition: 0.5s;
+    text-decoration: none !important;
+}
+.aMenu:hover,
+.aMenu:active,
+.aMenu:focus {
+    color: #353535;
+    outline: none;
+    text-decoration: none;
+}
+
 
 a:hover,
 a:active,
@@ -1149,7 +1162,15 @@ header{
     background-color: #790017 !important;
 }
 
- 
+
+.carousel-control-prev, .carousel-control-next, 
+.carousel-control-prev:hover, .carousel-control-next:hover {
+    opacity: 0;
+}
+.cn-content-inner{
+    color: #ffffff;
+    font-size: 0.7em;
+}
     
 
 

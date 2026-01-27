@@ -2,6 +2,7 @@
 import { onMounted, ref } from 'vue'; // Correct import for onMounted
 import { Head, Link} from '@inertiajs/vue3';
 import GeneralLayout from '@/Layouts/GeneralLayout.vue';
+import axios from 'axios';
 //import Carousel from '@/Components/Carousel.vue';
 
 const colors = [
@@ -11,17 +12,122 @@ const colors = [
     'red lighten-1',
     'deep-purple accent-4',
   ]
-  const slides = [
-    'First',
-    'Second',
-    'Third',
-    'Fourth',
-    'Fifth',
-  ]
 
-  const windowWidth = ref(window.innerWidth)
+const defaultSlides = [
+    {
+        image: 'images/eSporsSp.jpg',
+        title: 'First slide label',
+        description: 'Some representative placeholder content for the first slide.',
+        date: '05-Feb-2020',
+        link: ''
+    },
+    {
+        image: 'images/eSporsSp.jpg',
+        title: 'Second slide label',
+        description: 'Some representative placeholder content for the second slide.',
+        date: '05-Feb-2020',
+        link: ''
+    },
+    {
+        image: 'images/eSporsSp.jpg',
+        title: 'Third slide label',
+        description: 'Some representative placeholder content for the third slide.',
+        date: '05-Feb-2020',
+        link: ''
+    }
+]
 
-  
+const slides = ref(defaultSlides)
+const headerBanners = ref([]);
+const categorias = ref([]);
+const cosplay = ref([]);
+const windowWidth = ref(window.innerWidth)
+
+const apiUrl = import.meta.env.VITE_API_URL || 'http://127.0.0.1:3001/api';
+
+const fetchMateriasHome = async () => {
+    try {
+        
+        const response = await axios.get(`${apiUrl}/MateriasHome`);
+        const materias = response.data;
+        
+        if (materias && materias.length > 0) {
+            const carouselData = materias.slice(0, 3).map(materia => {
+                // Encontrar a imagem com vchr_Tipo = "Materia_home_thumb"
+                const thumbImage =  materia.images[0]
+
+            
+                return {
+                    image: thumbImage?.vchr_HRef || 'images/eSporsSp.jpg',
+                    title: materia.vchr_titulo || 'Sem título',
+                    description: materia.vchr_Resumo || materia.txt_Conteudo || null,
+                    date: materia.dt_post || materia.created_at || '',
+                    link: `${materia.vchr_LinkTitulo || materia.id}`,
+                    id: materia.int_MateriaId || materia.id
+                };
+            });
+
+            const headerBannersData = materias.slice(3, 7).map(materia => {
+                const thumbImage =  materia.images[0]
+                
+            
+                return {
+                    image: thumbImage?.vchr_HRef || 'images/eSporsSp.jpg',
+                    title: materia.vchr_titulo || 'Sem título',
+                    description: materia.vchr_Resumo || materia.txt_Conteudo || null,
+                    date: materia.dt_post || materia.created_at || '',
+                    link: `${materia.vchr_LinkTitulo || materia.id}`,
+                    id: materia.int_MateriaId || materia.id
+                };
+            });
+           
+            headerBanners.value = headerBannersData;
+            slides.value = carouselData.length > 0 ? carouselData : defaultSlides;
+            
+
+        }
+    } catch (error) {
+        console.error('Erro ao carregar matérias:', error);
+        // Mantém os slides padrão em caso de erro
+        slides.value = defaultSlides;
+    }
+};
+
+const fetchCategorias = async () => {
+    try {
+
+        const response = await axios.get(`${apiUrl}/areas?page=1&perPage=20`);
+        const areas = response.data;
+        
+        if (areas && areas.length > 0) {
+            // Filtrar: excluir type="pasta" e menu=0
+            const filtradas = areas.filter(area => {
+                
+                return area.type !== 'pasta' && area.menu !== 0;
+            });
+            
+            categorias.value = filtradas;
+        }
+    } catch (error) {
+        console.error('Erro ao carregar categorias:', error);
+        categorias.value = [];
+    }
+};
+
+const fetchCosplay = async () => {
+    try {
+
+        const response = await axios.get(`${apiUrl}/MateriasCategoria?id_area=11&page=1&perPage=3&orderBy=created_at&orderDirection=desc`);
+        const cosplays = response.data;
+        
+        if (cosplays && cosplays.length > 0) {
+            cosplay.value = cosplays;
+        }
+    } catch (error) {
+        console.error('Erro ao carregar categorias de cosplay:', error);
+        cosplay.value = [];
+    }
+};
 
 onMounted(() => {
     let slider = 300;
@@ -35,9 +141,16 @@ onMounted(() => {
         slider = 200;
     }
     const sliderHeight = slider;
+    
+    // Buscar matérias ao montar o componente
+    fetchMateriasHome();
+    
+    // Buscar categorias ao montar o componente
+    fetchCategorias();
 });
 
 </script>
+
 
     <template #header>
             <Head title="Home" />
@@ -61,18 +174,21 @@ onMounted(() => {
                                     >
                                         <v-carousel-item
                                         v-for="(slide, i) in slides"
-                                        :key="i"
+                                        :key="slide.id || i"
                                         >
                                         <v-sheet
-                                            :color="colors[i]"
+                                            :color="colors[i % colors.length]"
                                             height="100%"
                                         >
                                             <div class="d-flex fill-height justify-center align-center">
                                             <div class="text-h2">
-                                               <img src="images/eSporsSp.jpg" class="d-block w-100" alt="...">
+                                               <Link :href="slide.link">
+                                                   <img :src="slide.image" class="d-block w-100" :alt="slide.title">
+                                               </Link>
                                                 <div class="carousel-caption d-none d-md-block">
-                                                    <h5>First slide label</h5>
-                                                    <p>Some representative placeholder content for the first slide.</p>
+                                                    <Link :href="slide.link"> <h5 class="tn-title">{{ slide.title }}</h5></Link>
+                                                    <p v-if="slide.description">{{ slide.description }}</p>
+                                                   
                                                 </div>
                                             </div>
                                             </div>
@@ -83,51 +199,20 @@ onMounted(() => {
                                    
                                     <div class="col-md-6 tn-right">
                                         <div class="row gx-1">
-                                            <div class="col-md-6 col-sm-2" >
+                                            <div class="col-md-6 col-sm-2" v-for="(headerBanner, i) in headerBanners" :key="headerBanner.id || i" >
                                                 <div class="tn-img">
-                                                    <img src="images/eSporsSp.jpg" class="d-block w-100" alt="...">
+                                                      <Link :href="headerBanner.link">
+                                                        <img :src="headerBanner.image" class="d-block w-100" :alt="headerBanner.title">
+                                                     </Link>
                                                     <div class="tn-content">
                                                         <div class="tn-content-inner">
-                                                            <a class="tn-date" href=""><i class="far fa-clock"></i>05-Feb-2020</a>
-                                                            <a class="tn-title" href="">Integer faucibus pharetra odio</a>
+                                                        <!--     <i class="far fa-clock"></i>{{ headerBanner.date }} -->
+                                                            <a class="tn-title" :href="headerBanner.link">{{ headerBanner.title }}</a>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-6 col-sm-2">
-                                                <div class="tn-img">
-                                                     <img src="images/eSporsSp.jpg" class="d-block w-100" alt="...">
-                                                    <div class="tn-content">
-                                                        <div class="tn-content-inner">
-                                                            <a class="tn-date" href=""><i class="far fa-clock"></i>05-Feb-2020</a>
-                                                            <a class="tn-title" href="">Nulla vitae pharetra ligula</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-           
-                                            <div class="col-md-6 col-sm-2">
-                                                <div class="tn-img">
-                                                     <img src="images/eSporsSp.jpg" class="d-block w-100" alt="...">
-                                                    <div class="tn-content">
-                                                        <div class="tn-content-inner">
-                                                            <a class="tn-date" href=""><i class="far fa-clock"></i>05-Feb-2020</a>
-                                                            <a class="tn-title" href="">Ut ac euismod tellus a blandit</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6 col-sm-2">
-                                                <div class="tn-img">
-                                                     <img src="images/eSporsSp.jpg" class="d-block w-100" alt="...">
-                                                    <div class="tn-content">
-                                                        <div class="tn-content-inner">
-                                                            <a class="tn-date" href=""><i class="far fa-clock"></i>05-Feb-2020</a>
-                                                            <a class="tn-title" href="">Cras ac egestas sem nec euismod</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            
                                         </div>
                                     </div>
                                 </div>
@@ -142,7 +227,7 @@ onMounted(() => {
                             <div class="container-fluid">
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <h2><i class="fas fa-align-justify"></i>Sports</h2>
+                                        <h2><i class="fas fa-align-justify"></i>Destaques</h2>
                                         <div class="row cn-slider">
                                             <div class="col-md-6">
                                                 <div class="cn-img">
@@ -170,10 +255,10 @@ onMounted(() => {
                                         </div>
                                     </div>
                                     <div class="col-md-6">
-                                        <h2><i class="fas fa-align-justify"></i>Technology</h2>
+                                        <h2><i class="fas fa-align-justify"></i>Cosplay</h2>
                                         <div class="row cn-slider">
                                             <div class="col-md-6">
-                                                <div class="cn-img">
+                                                <div class="cn-img" v-for="cosplays in cosplay" :key="cosplays.id">
                                                     <img src="img/cat-news-4.jpg" />
                                                     <div class="cn-content">
                                                         <div class="cn-content-inner">
@@ -183,17 +268,7 @@ onMounted(() => {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-6">
-                                                <div class="cn-img">
-                                                    <img src="img/cat-news-5.jpg" />
-                                                    <div class="cn-content">
-                                                        <div class="cn-content-inner">
-                                                            <a class="cn-date" href=""><i class="far fa-clock"></i>05-Feb-2020</a>
-                                                            <a class="cn-title" href="">Phasellus vitae fermentum est</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            
                                             
                                         </div>
                                     </div>
@@ -210,7 +285,7 @@ onMounted(() => {
                                     <div class="col-md-8">
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <h2><i class="fas fa-align-justify"></i>Latest News</h2>
+                                                <h2><i class="fas fa-align-justify"></i>Ultimas Notícias</h2>
                                                 <div class="row">
                                                     <div class="col-lg-6">
                                                         <div class="mn-img">
@@ -274,7 +349,7 @@ onMounted(() => {
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
-                                                <h2><i class="fas fa-align-justify"></i>Popular News</h2>
+                                                <h2><i class="fas fa-align-justify"></i>Popular</h2>
                                                 <div class="row">
                                                     <div class="col-lg-6">
                                                         <div class="mn-img">
@@ -343,16 +418,13 @@ onMounted(() => {
                                     <div class="col-md-4">
                                         <div class="sidebar">
                                             <div class="sidebar-widget">
-                                                <h2><i class="fas fa-align-justify"></i>Category</h2>
+                                                <h2><i class="fas fa-align-justify"></i>Categorias</h2>
                                                 <div class="category">
                                                     <ul class="fa-ul">
-                                                        <li><span class="fa-li"><i class="far fa-arrow-alt-circle-right"></i></span><a href="">National</a></li>
-                                                        <li><span class="fa-li"><i class="far fa-arrow-alt-circle-right"></i></span><a href="">International</a></li>
-                                                        <li><span class="fa-li"><i class="far fa-arrow-alt-circle-right"></i></span><a href="">Economics</a></li>
-                                                        <li><span class="fa-li"><i class="far fa-arrow-alt-circle-right"></i></span><a href="">Politics</a></li>
-                                                        <li><span class="fa-li"><i class="far fa-arrow-alt-circle-right"></i></span><a href="">Lifestyle</a></li>
-                                                        <li><span class="fa-li"><i class="far fa-arrow-alt-circle-right"></i></span><a href="">Technology</a></li>
-                                                        <li><span class="fa-li"><i class="far fa-arrow-alt-circle-right"></i></span><a href="">Trades</a></li>
+                                                        <li v-for="categoria in categorias" :key="categoria.id">
+                                                            <span class="fa-li"><i class="far fa-arrow-alt-circle-right"></i></span>
+                                                            <Link :href="`/categoria/${categoria.id}`">{{ categoria.nome }}</Link>
+                                                        </li>
                                                     </ul>
                                                 </div>
                                             </div>

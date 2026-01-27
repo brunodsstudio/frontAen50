@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\CategoriaController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 //use App\Http\Controllers\AuthJWT\AuthProxyController;
@@ -17,9 +19,12 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/home', function () {
+Route::get('/home', [HomeController::class, 'show'])->name('home');
+
+
+/*Route::get('/home', function () {
     return Inertia::render('Home');
-})->name('home');
+})->name('home');*/
 
 Route::get('/imgEditor', function () {
     return Inertia::render('ImgEditor');
@@ -54,3 +59,19 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+// Galeria proxy route - server-side request to API
+Route::get('/galeria-proxy/{pastaS3}/{pagina}', [App\Http\Controllers\MateriaController::class, 'galeriaProxy'])
+    ->name('galeria.proxy')
+    ->where(['pagina' => '[0-9]+']);
+
+// Rota para busca por tag (deve vir antes do catch-all)
+Route::get('/tag/{tag}', [CategoriaController::class, 'showByTag'])->name('tag.show');
+
+// Rota para categoria (com restrição específica)
+Route::get('/{categoria}', [CategoriaController::class, 'show'])->name('categoria.show')
+    ->where('categoria', 'Cinema|Games|Quadrinhos|Animes|Séries|Acontece|Agenda|Cosplay|Critica|HappyGeek|Incomming|Resenha|TOPTOP|Videos');
+
+// Rota para matéria específica (catch-all - deve ser a última)
+Route::get('/{linkTitulo}', [App\Http\Controllers\MateriaController::class, 'show'])
+    ->name('materia.show');

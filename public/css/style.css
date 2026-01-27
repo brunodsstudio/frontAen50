@@ -9,9 +9,25 @@ body {
 }
 
 a {
-    color: #E47A2E;
+    font-family: 'Kdam Thmor Pro', sans-serif;
     transition: 0.5s;
+    text-decoration: none !important;
 }
+
+.aMenu {
+    font-family: 'Kdam Thmor Pro', sans-serif;
+     color: rgb(246 230 6) !important;
+    transition: 0.5s;
+    text-decoration: none !important;
+}
+.aMenu:hover,
+.aMenu:active,
+.aMenu:focus {
+    color: #353535;
+    outline: none;
+    text-decoration: none;
+}
+
 
 a:hover,
 a:active,
@@ -19,6 +35,10 @@ a:focus {
     color: #353535;
     outline: none;
     text-decoration: none;
+}
+
+.tn-title, .tn-title p, .tn-title h5{
+    font-family: 'Kdam Thmor Pro', sans-serif;
 }
 
 p {
@@ -33,6 +53,7 @@ h3,
 h4,
 h5,
 h6 {
+    font-family: 'Kdam Thmor Pro', sans-serif;
     color: #353535;
     margin: 0 0 15px 0;
     padding: 0;
@@ -220,10 +241,15 @@ button.btn:hover {
 /**********************************/
 /********* Header Nav CSS *********/
 /**********************************/
+header{
+     background-image: url(/images/site_header.jpg);
+     background-repeat: repeat;
+}
+
 .header {
     position: relative;
     box-shadow: 0 2px 5px rgba(0, 0, 0, .3);
-    background-image: url(/images/site_header.jpg);
+   
 }
 
 .header.header-sticky {
@@ -249,6 +275,7 @@ button.btn:hover {
 .navbar-dark .navbar-nav .nav-link:hover,
 .navbar-dark .navbar-nav .nav-link.active {
     background: rgba(228, 122, 46, .2);
+    
     border-bottom: 2px solid #E47A2E;
     transition: none;
 }
@@ -260,37 +287,7 @@ button.btn:hover {
     background: #f8f9fa;
 }
 
-@media (min-width: 768px) {
-    .header,
-    .header .navbar {
-        background: #353535 !important;
-    }
-    
-    .header .navbar-brand {
-        display: none;
-    }
-    
-    .header a.nav-link {
-        padding: 8px 15px;
-        font-size: 15px;
-        text-transform: uppercase;
-    }
-}
 
-@media (max-width: 768px) {   
-    .header,
-    .header .navbar {
-        background: #333333 !important;
-    }
-    
-    .header a.nav-link {
-        padding: 5px;
-    }
-    
-    .header .dropdown-menu {
-        box-shadow: none;
-    }
-}
 
 
 /**********************************/
@@ -303,7 +300,7 @@ button.btn:hover {
 }
 
 .top-news .col-md-6 {
-    margin-bottom: 30px;
+    margin-bottom: 3px;
 }
 
 .top-news .tn-img {
@@ -1058,9 +1055,128 @@ button.btn:hover {
     color: #ffffff;
 }
 
+.header_img {
+        min-height: 123px;
+        width: 381px;
+        margin-left: 24%;
+       
+        
+    }
+
 @media (max-width: 768.98px) {
+        .header_img {
+       margin-left: 32%;
+    }
+
+
     .footer-bottom .copyright,
     .footer-bottom .template-by {
         text-align: center; 
     } 
 }
+
+   
+
+    .text-center {
+    text-align: center !important;
+    }
+
+    @media (min-width: 1200px) {
+        .container, .container-sm, .container-md, .container-lg, .container-xl {
+            max-width: 1140px;
+        }
+
+        .navbar-expand-lg {
+        -ms-flex-flow: row nowrap;
+        flex-flow: row nowrap;
+        -ms-flex-pack: start;
+        justify-content: flex-start;
+    }
+    }
+    @media (min-width: 992px) {
+        .container, .container-sm, .container-md, .container-lg {
+            max-width: 960px;
+        }
+        .header_img {
+           
+        }
+        .navbar-expand-lg {
+        -ms-flex-flow: row nowrap;
+        flex-flow: row nowrap;
+        -ms-flex-pack: start;
+        justify-content: flex-start;
+    }
+    }
+    @media (min-width: 768px) {
+
+        .header_img {
+        
+    }
+
+        .header,
+    .header .navbar {
+        background: #790017 !important;
+    }
+    
+    .header .navbar-brand {
+        display: none;
+    }
+    
+    .header a.nav-link {
+        padding: 8px 15px;
+        font-size: 15px;
+        text-transform: uppercase;
+    }
+
+        .container, .container-sm, .container-md {
+            max-width: 720px;
+        }
+
+         .navbar-expand-lg {
+        -ms-flex-flow: row nowrap;
+        flex-flow: row nowrap;
+        -ms-flex-pack: start;
+        justify-content: flex-start;
+    }
+    }
+
+    @media (max-width: 768px) {   
+        .header,
+        .header .navbar {
+            background:#790017 !important;
+        }
+        
+        .header a.nav-link {
+            padding: 5px;
+        }
+        
+        .header .dropdown-menu {
+            box-shadow: none;
+        }
+    }
+
+    @media (max-width: 500px) {   
+        .header_img {
+             margin-left: 0px;
+        }
+    }
+
+.bg-darkred {
+    background-color: #790017 !important;
+}
+
+ 
+.carousel-control-prev, .carousel-control-next, 
+.carousel-control-prev:hover, .carousel-control-next:hover {
+    opacity: 0;
+}
+
+.cn-content-inner{
+    color: #ffffff;
+    font-size: 0.7em;
+}
+    
+
+    
+
+
