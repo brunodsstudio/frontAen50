@@ -18,6 +18,16 @@ export default defineConfig({
                 },
             },
         }),
-        vuetify({ autoImport: true }), // Auto-imports Vuetify components
+        vuetify({ autoImport: true }),
     ],
+    resolve: {
+        alias: {
+            '@': '/resources/js',
+        },
+    },
+    server: {
+        hmr: {
+            overlay: false,
+        },
+    },
 });

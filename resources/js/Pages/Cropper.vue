@@ -206,7 +206,7 @@
 
 <script>
 import VueCropper from 'vue-cropperjs';
-import 'cropperjs/dist/cropper.css';
+// cropperjs v2.x não requer import de CSS separado
 import GeneralLayout from '../Layouts/GeneralLayout.vue';
 
 export default {

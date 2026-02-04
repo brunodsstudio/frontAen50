@@ -4,43 +4,50 @@
                 <div class="row">
                     <div class="col-lg-3 col-md-6">
                         <div class="footer-widget">
-                            <h3 class="title">Useful Links</h3>
+                            <h3 class="title">Categorias</h3>
                             <ul>
-                                <li><a href="#">Pellentesque</a></li>
-                                <li><a href="#">Aliquam</a></li>
-                                <li><a href="#">Fusce placerat</a></li>
-                                <li><a href="#">Nulla hendrerit</a></li>
-                                <li><a href="#">Maecenas</a></li>
+                                @if(isset($categorias) && is_array($categorias))
+                                    @foreach(array_slice($categorias, 0, 6) as $cat)
+                                        <li><a href="/{{ strtolower($cat['nome']) }}">{{ $cat['nome'] }}</a></li>
+                                    @endforeach
+                                @else
+                                    <li><a href="/Cinema">Cinema</a></li>
+                                    <li><a href="/Games">Games</a></li>
+                                    <li><a href="/Quadrinhos">Quadrinhos</a></li>
+                                    <li><a href="/Animes">Animes</a></li>
+                                    <li><a href="/Cosplay">Cosplay</a></li>
+                                @endif
                             </ul>
                         </div>
                     </div>
 
                     <div class="col-lg-3 col-md-6">
                         <div class="footer-widget">
-                            <h3 class="title">Quick Links</h3>
+                            <h3 class="title">Tags Populares</h3>
                             <ul>
-                                <li><a href="#">Posuere egestas</a></li>
-                                <li><a href="#">Sollicitudin</a></li>
-                                <li><a href="#">Luctus non</a></li>
-                                <li><a href="#">Duis tincidunt</a></li>
-                                <li><a href="#">Elementum</a></li>
+                                <li><a href="/tag/MCU">MCU</a></li>
+                                <li><a href="/tag/Marvel">Marvel</a></li>
+                                <li><a href="/tag/DC">DC Comics</a></li>
+                                <li><a href="/tag/Anime">Anime</a></li>
+                                <li><a href="/tag/Netflix">Netflix</a></li>
+                                <li><a href="/tag/Disney+">Disney+</a></li>
                             </ul>
                         </div>
                     </div>
 
                     <div class="col-lg-3 col-md-6">
                         <div class="footer-widget">
-                            <h3 class="title">Get in Touch</h3>
+                            <h3 class="title">Siga-nos</h3>
                             <div class="contact-info">
-                                <p><i class="fa fa-map-marker"></i>123 Terry Lane, New York, USA</p>
-                                <p><i class="fa fa-envelope"></i>email@example.com</p>
-                                <p><i class="fa fa-phone"></i>+123-456-7890</p>
+                                <p><i class="fa fa-map-marker"></i>São Paulo, Brasil</p>
+                                <p><i class="fa fa-envelope"></i>contato@aeranerd.com.br</p>
+                                <p><i class="fas fa-globe"></i><a href="https://www.aeranerd.com.br" target="_blank" style="color: inherit; margin-left: 5px;">www.aeranerd.com.br</a></p>
                                 <div class="social">
-                                    <a href=""><i class="fab fa-twitter"></i></a>
-                                    <a href=""><i class="fab fa-facebook"></i></a>
-                                    <a href=""><i class="fab fa-linkedin"></i></a>
-                                    <a href=""><i class="fab fa-instagram"></i></a>
-                                    <a href=""><i class="fab fa-youtube"></i></a>
+                                    <a href="https://twitter.com/aeranerd" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a>
+                                    <a href="https://facebook.com/aeranerd" target="_blank" title="Facebook"><i class="fab fa-facebook"></i></a>
+                                    <a href="https://instagram.com/aeranerd" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+                                    <a href="https://youtube.com/@aeranerd" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>
+                                    <a href="https://tiktok.com/@aeranerd" target="_blank" title="TikTok"><i class="fab fa-tiktok"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -48,15 +55,14 @@
                     
                     <div class="col-lg-3 col-md-6">
                         <div class="footer-widget">
-                            <h3 class="title">Newsletter</h3>
+                            <h3 class="title">Sobre o A Era Nerd</h3>
                             <div class="newsletter">
                                 <p>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sed porta dui. Class aptent taciti sociosqu ad litora torquent per conubia nostra inceptos
+                                    Portal dedicado ao universo geek com notícias sobre cinema, games, quadrinhos, animes, séries e tudo sobre a cultura nerd. Fique por dentro das últimas novidades!
                                 </p>
-                                <form>
-                                    <input class="form-control" type="email" placeholder="Your email here">
-                                    <button class="btn">Submit</button>
-                                </form>
+                                <div style="margin-top: 15px;">
+                                    <a href="/home" class="btn btn-sm" style="background-color: #ff6b6b; color: white;">Ir para Home</a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -71,13 +77,15 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-6 copyright">
-                        <p>Copyright &copy; <a href="https://htmlcodex.com">HTML Codex</a>. All Rights Reserved</p>
+                        <p>Copyright &copy; {{ date('Y') }} <a href="https://www.aeranerd.com.br">A Era Nerd</a>. Todos os direitos reservados.</p>
                     </div>
 
                     <div class="col-md-6 template-by">
-                        <!--/*** The author’s attribution link below must remain intact on your website. ***/-->
-                        <!--/*** If you wish to remove this credit link, please purchase the Pro Version from https://htmlcodex.com . ***/-->
-                        <p>Designed By <a href="https://htmlcodex.com">HTML Codex</a></p>
+                        <p>
+                            <a href="/sobre">Sobre</a> | 
+                            <a href="/contato">Contato</a> | 
+                            <a href="/politica-privacidade">Política de Privacidade</a>
+                        </p>
                     </div>
                 </div>
             </div>

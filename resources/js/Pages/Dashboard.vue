@@ -1,49 +1,28 @@
 <script setup>
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 import { Link } from '@inertiajs/vue3';
+import DashboardSidebar from '@/Components/DashboardSidebar.vue';
+import DashboardAppBar from '@/Components/DashboardAppBar.vue';
+import DashboardFooter from '@/Components/DashboardFooter.vue';
 </script>
 
 <template>
   <v-app>
-    <v-navigation-drawer v-model="drawer" app>
-      <v-list>
-        <v-list-item>
-          <v-list-item-content>
-            <v-list-item-title class="text-h6">
-              <Link href="/">
-                <ApplicationLogo class="h-10 w-10 fill-current text-gray-500" />
-              </Link>
-            </v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
+     <!-- Navigation Drawer -->
+    <DashboardSidebar v-model="drawer" />
 
-        <v-divider></v-divider>
-
-        <v-list-item link>
-          <v-list-item-icon>
-            <v-icon>mdi-home</v-icon>
-          </v-list-item-icon>
-          <v-list-item-content>
-            <Link href="/">Home</Link>
-          </v-list-item-content>
-        </v-list-item>
-
-        <!-- Add more navigation items here -->
-      </v-list>
-    </v-navigation-drawer>
-
-    <v-app-bar app color="primary" dark>
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-toolbar-title>My Application</v-toolbar-title>
-    </v-app-bar>
+    <!-- App Bar -->
+    <DashboardAppBar 
+      title="My Application"
+      :breadcrumbs="['Dashboard', 'Eventos']"
+      @toggle-drawer="drawer = !drawer"
+    />
 
     <v-main>
       <slot />
     </v-main>
 
-    <v-footer app color="primary" dark>
-      <span class="white--text">&copy; 2024 My Application</span>
-    </v-footer>
+   <DashboardFooter />
   </v-app>
 </template>
 

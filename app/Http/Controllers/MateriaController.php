@@ -189,6 +189,7 @@ class MateriaController extends Controller
 
             return view($viewName, [
                 'materia' => $materia,
+                
                 'featuredImage' => $featuredImage,
                 'writer' => $writer,
                 'tags' => $tags,

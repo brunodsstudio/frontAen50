@@ -46,6 +46,13 @@ Route::group(['prefix' => 'admin'], function () {
 
 Route::middleware([RequireJwt::class])->group(function () {
     Route::get('/dashboard', fn() => Inertia::render('Dashboard'))->name('dashboard');
+    Route::get('/dashboard/eventos', fn() => Inertia::render('Eventos'))->name('dashboard.eventos');
+    
+    // Rotas de Matérias
+    Route::get('/dashboard/materias', fn() => Inertia::render('Dashboard/Materias'))->name('dashboard.materias');
+    Route::get('/dashboard/materias/criar', fn() => Inertia::render('Dashboard/Materias/Form'))->name('dashboard.materias.criar');
+    Route::get('/dashboard/materias/editar/{id}', fn($id) => Inertia::render('Dashboard/Materias/Form', ['id' => $id]))->name('dashboard.materias.editar');
+    Route::get('/dashboard/materias/{id}/imagens', fn($id) => Inertia::render('Dashboard/Materias/Imagens', ['id' => $id]))->name('dashboard.materias.imagens');
 });
 
 /*Route::get('/dashboard', function () {
