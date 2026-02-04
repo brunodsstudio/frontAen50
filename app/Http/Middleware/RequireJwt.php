@@ -14,20 +14,24 @@ class RequireJwt
 {
 public function handle(Request $request, Closure $next): Response
 {
-     $routeName = Req::route()->getName();
-   // dd($request->cookies->all(), $routeName);
-
-    if($routeName === 'login' || $routeName === 'loginaction' || $routeName === 'register' || $routeName === 'password.request' || $routeName === 'password.email' || $routeName === 'password.reset' || $routeName === 'password.store'){
+    $routeName = Req::route()->getName();
+   
+    // Rotas públicas que não requerem JWT
+    $publicRoutes = ['login', 'loginaction', 'register', 'password.request', 'password.email', 'password.reset', 'password.store', 'home'];
+    
+    if (in_array($routeName, $publicRoutes) || $request->path() === '/') {
         return $next($request);
     }
 
-   if (!$request->cookies->has('jwt')) {
-    // Se for solicitação Inertia/SSR, redirecione corretamente
+    // Verifica se o JWT está presente
+    if (!$request->cookies->has('jwt')) {
+        // Se for solicitação Inertia/SSR, redirecione corretamente
         if ($request->expectsJson() || $request->header('X-Inertia')) {
             return redirect()->route('login');
         }
         return redirect()->route('login');
     }
+    
     return $next($request);
 }
 }

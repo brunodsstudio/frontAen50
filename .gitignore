@@ -3,9 +3,13 @@
 /node_modules
 /public/build
 /public/hot
+/public/images/materias
+/public/images/materiasold
+/public/images/materias_xx
 /public/storage
 /storage/*.key
 /storage/pail
+
 /vendor
 .env
 .env.backup

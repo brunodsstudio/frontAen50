@@ -15,7 +15,7 @@ class MyAuthenticatableUser implements Authenticatable
 
     public function getAuthIdentifierName() { return 'id'; }
     public function getAuthIdentifier() { 
-        return $this->attributes['id']; 
+        //return $this->attributes['id']; 
     }
 
     public function getAuthPassword() { return null; } // Password not stored locally
