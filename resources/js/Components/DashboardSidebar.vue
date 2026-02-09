@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { computed } from 'vue';
 import { Link } from '@inertiajs/vue3';
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 
@@ -12,11 +12,13 @@ const props = defineProps({
 
 const emit = defineEmits(['update:modelValue']);
 
-const drawer = ref(props.modelValue);
+const drawer = computed({
+  get: () => props.modelValue,
+  set: (value) => emit('update:modelValue', value),
+});
 
 const toggleDrawer = () => {
   drawer.value = !drawer.value;
-  emit('update:modelValue', drawer.value);
 };
 </script>
 
@@ -26,9 +28,9 @@ const toggleDrawer = () => {
       <v-list-item>
         <v-list-item-content>
           <v-list-item-title class="text-h6">
-            <Link href="/">
-              <ApplicationLogo class="h-10 w-10 fill-current text-gray-500" />
-            </Link>
+          
+              <ApplicationLogo @click.prevent="toggleDrawer" class="h-10 w-10 fill-current text-gray-500" />
+       
           </v-list-item-title>
         </v-list-item-content>
       </v-list-item>
@@ -95,6 +97,21 @@ const toggleDrawer = () => {
 </template>
 
 <style scoped>
+.v-list-item {
+  align-items: center;
+}
+
+:deep(.v-list-item__content) {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+:deep(.v-list-item__icon),
+:deep(.v-list-item__prepend) {
+  margin-inline-end: 0;
+}
+
 .v-list-item-icon i {
   font-size: 20px;
   color: #666;
