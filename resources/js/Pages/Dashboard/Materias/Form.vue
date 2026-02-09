@@ -5,9 +5,11 @@ import { Head, router, usePage } from '@inertiajs/vue3';
 import DashboardSidebar from '@/Components/DashboardSidebar.vue';
 import DashboardAppBar from '@/Components/DashboardAppBar.vue';
 import DashboardFooter from '@/Components/DashboardFooter.vue';
+import FeaturedImageEditor from '@/Components/FeaturedImageEditor.vue';
 import { useMateriaState } from '@/Composables/useMateriaState';
 import { Ckeditor } from '@ckeditor/ckeditor5-vue';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import '@ckeditor/ckeditor5-build-classic/build/translations/pt-br';
 
 const ckeditor = Ckeditor;
 
@@ -43,7 +45,10 @@ const editorConfig = {
       'undo', 'redo'
     ]
   },
-  language: 'pt-br',
+  language: {
+    ui: 'pt-br',
+    content: 'pt-br',
+  },
   table: {
     contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells']
   },
@@ -64,6 +69,7 @@ const formData = ref({
   txt_corpo: '',
   txt_lead: '',
   bool_onLine: false,
+  bool_home: false,
   dt_publicacao: '',
   // Campos SEO
   seo_title: '',
@@ -131,6 +137,7 @@ const fetchMateria = async () => {
     formData.value.int_id_area = materia.area_id || materia.int_id_area || null;
     formData.value.txt_lead = materia.txt_lead || '';
     formData.value.bool_onLine = materia.on_line === 1 || materia.bool_onLine || false;
+    formData.value.bool_home = materia.home === 1 || materia.bool_home || false;
     formData.value.dt_publicacao = materia.created_at || materia.dt_publicacao || '';
     
     // Campos SEO
@@ -147,7 +154,8 @@ const fetchMateria = async () => {
     const corpo = materia.content || materia.txt_corpo;
     if (corpo) {
       try {
-        editorData.value = atob(corpo);
+        const decoded = atob(corpo);
+        editorData.value = decodeURIComponent(escape(decoded));
       } catch {
         editorData.value = corpo;
       }
@@ -473,6 +481,13 @@ onMounted(() => {
                             As imagens destacadas são gerenciadas na tabela tb_aen_images.
                             Use o botão "Gerenciar Imagens" após salvar a matéria.
                           </div>
+                          <div class="mb-3">
+                            <FeaturedImageEditor
+                              :materia-id="props.id"
+                              :api-url="API_URL"
+                              @saved="fetchMateria"
+                            />
+                          </div>
                           <v-text-field
                             v-model="formData.int_id_imagem_destaque"
                             label="ID da Imagem Destacada"
@@ -652,6 +667,37 @@ onMounted(() => {
                         hint="Ao ativar, a matéria ficará visível no site"
                         persistent-hint
                       ></v-switch>
+                    </v-col>
+
+                    <!-- Mostrar na Home -->
+                    <v-col cols="12" md="6">
+                      <v-switch
+                        v-model="formData.bool_home"
+                        color="primary"
+                        label="Mostra na home"
+                        hint="Ao ativar, a matéria será exibida na página inicial"
+                        persistent-hint
+                      ></v-switch>
+                    </v-col>
+
+                    <!-- Editor de Imagem Destacada -->
+                    <v-col cols="12" v-if="isEditMode">
+                      <v-card variant="outlined" class="pa-4">
+                        <div class="d-flex align-center justify-space-between flex-wrap gap-2">
+                          <div class="text-subtitle-1 d-flex align-center">
+                            <v-icon class="me-2">mdi-image-edit</v-icon>
+                            Editor de Imagem Destacada
+                          </div>
+                          <FeaturedImageEditor
+                            :materia-id="props.id"
+                            :api-url="API_URL"
+                            @saved="fetchMateria"
+                          />
+                        </div>
+                        <div class="text-caption text-grey mt-2">
+                          Disponível somente na edição, após a matéria ter um ID.
+                        </div>
+                      </v-card>
                     </v-col>
                   </v-row>
                 </v-card-text>

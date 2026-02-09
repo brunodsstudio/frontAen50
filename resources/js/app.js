@@ -18,6 +18,8 @@ import { createVuetify } from 'vuetify';
     import 'vuetify/styles'; // Import Vuetify styles
     import * as components from 'vuetify/components';
     import * as directives from 'vuetify/directives';
+import '@mdi/font/css/materialdesignicons.css';
+import { aliases, mdi } from 'vuetify/iconsets/mdi';
 
 import 'bootstrap/dist/css/bootstrap.css';
 
@@ -28,6 +30,13 @@ const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 const vuetify = createVuetify({
         components,
         directives,
+        icons: {
+            defaultSet: 'mdi',
+            aliases,
+            sets: {
+                mdi,
+            },
+        },
     });
 
 

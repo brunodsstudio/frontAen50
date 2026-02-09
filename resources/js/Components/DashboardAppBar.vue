@@ -1,4 +1,6 @@
 <script setup>
+
+
 const props = defineProps({
   title: {
     type: String,
@@ -19,8 +21,12 @@ const toggleDrawer = () => {
 
 <template>
   <v-app-bar app color="primary" dark>
-    <v-app-bar-nav-icon @click="toggleDrawer"></v-app-bar-nav-icon>
-    <v-toolbar-title>{{ title }}</v-toolbar-title>
+    <v-app-bar-nav-icon class="drawer-toggle" variant="plain" @click="toggleDrawer">
+      <v-icon class="drawer-toggle-icon">mdi-menu</v-icon>
+    </v-app-bar-nav-icon>
+    <v-toolbar-title class="app-bar-title">
+      <span>{{ title }}</span>
+    </v-toolbar-title> 
     <v-spacer></v-spacer>
     <v-breadcrumbs :items="breadcrumbs" class="pa-0">
       <template v-slot:divider>
@@ -33,5 +39,28 @@ const toggleDrawer = () => {
 <style scoped>
 .v-breadcrumbs {
   color: white;
+}
+
+.app-bar-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.app-bar-logo {
+  width: 28px;
+  height: 28px;
+  fill: currentColor;
+}
+
+.drawer-toggle {
+  color: #fff;
+  opacity: 1;
+}
+
+:deep(.drawer-toggle .v-icon),
+.drawer-toggle-icon {
+  color: #fff;
+  opacity: 1;
 }
 </style>
