@@ -53,6 +53,11 @@ Route::middleware([RequireJwt::class])->group(function () {
     Route::get('/dashboard/materias/criar', fn() => Inertia::render('Dashboard/Materias/Form'))->name('dashboard.materias.criar');
     Route::get('/dashboard/materias/editar/{id}', fn($id) => Inertia::render('Dashboard/Materias/Form', ['id' => $id]))->name('dashboard.materias.editar');
     Route::get('/dashboard/materias/{id}/imagens', fn($id) => Inertia::render('Dashboard/Materias/Imagens', ['id' => $id]))->name('dashboard.materias.imagens');
+
+    // Rotas de Escritores
+    Route::get('/dashboard/escritores', fn() => Inertia::render('Dashboard/Escritores/Index'))->name('dashboard.escritores');
+    Route::get('/dashboard/escritores/criar', fn() => Inertia::render('Dashboard/Escritores/Form'))->name('dashboard.escritores.criar');
+    Route::get('/dashboard/escritores/editar/{id}', fn($id) => Inertia::render('Dashboard/Escritores/Form', ['id' => $id]))->name('dashboard.escritores.editar');
 });
 
 /*Route::get('/dashboard', function () {

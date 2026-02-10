@@ -485,6 +485,7 @@ onMounted(() => {
                             <FeaturedImageEditor
                               :materia-id="props.id"
                               :api-url="API_URL"
+                              :materia-title="formData.vchr_titulo"
                               @saved="fetchMateria"
                             />
                           </div>
@@ -691,6 +692,7 @@ onMounted(() => {
                           <FeaturedImageEditor
                             :materia-id="props.id"
                             :api-url="API_URL"
+                            :materia-title="formData.vchr_titulo"
                             @saved="fetchMateria"
                           />
                         </div>

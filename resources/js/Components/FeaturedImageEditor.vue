@@ -13,6 +13,10 @@ const props = defineProps({
     type: String,
     required: true,
   },
+  materiaTitle: {
+    type: String,
+    default: '',
+  },
 });
 
 const emit = defineEmits(['saved']);
@@ -39,8 +43,29 @@ const aspectRatio = computed(() => {
   return null;
 });
 
+// Função para normalizar o título da matéria (remove acentos, espaços e caracteres especiais)
+const normalizeTitle = (title) => {
+  if (!title) return '';
+  
+  // Remove acentos
+  const normalized = title
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '');
+  
+  // Converte para lowercase e substitui espaços e caracteres especiais por hífen
+  return normalized
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, ''); // Remove hífens do início e fim
+};
+
 const open = () => {
   showDialog.value = true;
+  
+  // Define o baseName automaticamente com o título da matéria normalizado
+  if (props.materiaTitle && !baseName.value) {
+    baseName.value = normalizeTitle(props.materiaTitle);
+  }
 };
 
 const close = () => {
@@ -99,14 +124,31 @@ const loadImage = (src) =>
 
 const canvasToUrl = (canvas) => canvas.toDataURL('image/png');
 
-const urlToPngBlob = async (src) => {
+const urlToPngBlob = async (src, quality = 0.85) => {
   const img = await loadImage(src);
   const canvas = document.createElement('canvas');
-  canvas.width = img.width;
-  canvas.height = img.height;
+  
+  // Limitar dimensões máximas para evitar imagens muito grandes
+  const maxDimension = 2560;
+  let { width, height } = img;
+  
+  if (width > maxDimension || height > maxDimension) {
+    if (width > height) {
+      height = (height / width) * maxDimension;
+      width = maxDimension;
+    } else {
+      width = (width / height) * maxDimension;
+      height = maxDimension;
+    }
+  }
+  
+  canvas.width = width;
+  canvas.height = height;
   const ctx = canvas.getContext('2d');
-  ctx.drawImage(img, 0, 0);
-  const dataUrl = canvas.toDataURL('image/png');
+  ctx.drawImage(img, 0, 0, width, height);
+  
+  // Usar JPEG com compressão para imagens grandes
+  const dataUrl = canvas.toDataURL('image/jpeg', quality);
   return dataUrlToBlob(dataUrl);
 };
 
@@ -183,7 +225,10 @@ const applyWatermark = async () => {
 
 const dataUrlToBlob = async (dataUrl) => {
   const res = await fetch(dataUrl);
-  return res.blob();
+  const blob = await res.blob();
+  // Detecta o tipo MIME correto do dataUrl
+  const mimeType = dataUrl.split(',')[0].match(/:(.*?);/)?.[1] || 'image/png';
+  return new Blob([blob], { type: mimeType });
 };
 
 const save = async () => {
@@ -204,16 +249,15 @@ const save = async () => {
   saving.value = true;
   try {
     const formData = new FormData();
-    const blob = await urlToPngBlob(imageUrl.value);
-    formData.append('image', blob, `${baseName.value.trim()}.png`);
+    const blob = await urlToPngBlob(imageUrl.value, 0.85);
+    formData.append('image', blob, `${baseName.value.trim()}.jpg`);
     formData.append('base_name', baseName.value.trim());
     formData.append('watermark_text', '');
     formData.append('watermark_opacity', '0');
 
     const response = await axios.post(
       `${props.apiUrl}/materias/${props.materiaId}/images/featured-editor`,
-      formData,
-      { headers: { 'Content-Type': 'multipart/form-data' } }
+      formData
     );
 
     alert(response.data?.message || 'Imagens geradas com sucesso.');
@@ -325,38 +369,64 @@ const save = async () => {
                 class="mt-2"
               ></v-slider>
 
-              <v-btn-toggle class="mt-2" variant="outlined" divided>
-                <v-btn @click="applyCrop">
-                  <v-icon start>mdi-crop</v-icon>
-                  Crop
-                </v-btn>
-                <v-btn @click="applyFlip('x')">
-                  <v-icon start>mdi-flip-horizontal</v-icon>
-                  Flip H
-                </v-btn>
-                <v-btn @click="applyFlip('y')">
-                  <v-icon start>mdi-flip-vertical</v-icon>
-                  Flip V
-                </v-btn>
-                <v-btn @click="applyResize">
-                  <v-icon start>mdi-resize</v-icon>
-                  Resize
-                </v-btn>
-                <v-btn @click="applyWatermark">
-                  <v-icon start>mdi-watermark</v-icon>
-                  Watermark
-                </v-btn>
-              </v-btn-toggle>
+              <div class="d-flex flex-wrap gap-2 mt-2">
+                <v-tooltip text="Recortar imagem" location="top">
+                  <template v-slot:activator="{ props: tooltipProps }">
+                    <v-btn v-bind="tooltipProps" icon variant="outlined" @click="applyCrop">
+                      <v-icon>mdi-crop</v-icon>
+                    </v-btn>
+                  </template>
+                </v-tooltip>
 
-              <div class="d-flex gap-2 mt-2">
-                <v-btn variant="outlined" :disabled="historyIndex <= 0" @click="undo">
-                  <v-icon start>mdi-undo</v-icon>
-                  Voltar
-                </v-btn>
-                <v-btn variant="outlined" :disabled="historyIndex >= history.length - 1" @click="redo">
-                  <v-icon start>mdi-redo</v-icon>
-                  Avançar
-                </v-btn>
+                <v-tooltip text="Espelhar horizontalmente" location="top">
+                  <template v-slot:activator="{ props: tooltipProps }">
+                    <v-btn v-bind="tooltipProps" icon variant="outlined" @click="applyFlip('x')">
+                      <v-icon>mdi-flip-horizontal</v-icon>
+                    </v-btn>
+                  </template>
+                </v-tooltip>
+
+                <v-tooltip text="Espelhar verticalmente" location="top">
+                  <template v-slot:activator="{ props: tooltipProps }">
+                    <v-btn v-bind="tooltipProps" icon variant="outlined" @click="applyFlip('y')">
+                      <v-icon>mdi-flip-vertical</v-icon>
+                    </v-btn>
+                  </template>
+                </v-tooltip>
+
+                <v-tooltip text="Redimensionar imagem" location="top">
+                  <template v-slot:activator="{ props: tooltipProps }">
+                    <v-btn v-bind="tooltipProps" icon variant="outlined" @click="applyResize">
+                      <v-icon>mdi-resize</v-icon>
+                    </v-btn>
+                  </template>
+                </v-tooltip>
+
+                <v-tooltip text="Adicionar marca d'água" location="top">
+                  <template v-slot:activator="{ props: tooltipProps }">
+                    <v-btn v-bind="tooltipProps" icon variant="outlined" @click="applyWatermark">
+                      <v-icon>mdi-watermark</v-icon>
+                    </v-btn>
+                  </template>
+                </v-tooltip>
+              </div>
+
+              <div class="d-flex flex-wrap gap-2 mt-2">
+                <v-tooltip text="Desfazer" location="top">
+                  <template v-slot:activator="{ props: tooltipProps }">
+                    <v-btn v-bind="tooltipProps" icon variant="outlined" :disabled="historyIndex <= 0" @click="undo">
+                      <v-icon>mdi-undo</v-icon>
+                    </v-btn>
+                  </template>
+                </v-tooltip>
+
+                <v-tooltip text="Refazer" location="top">
+                  <template v-slot:activator="{ props: tooltipProps }">
+                    <v-btn v-bind="tooltipProps" icon variant="outlined" :disabled="historyIndex >= history.length - 1" @click="redo">
+                      <v-icon>mdi-redo</v-icon>
+                    </v-btn>
+                  </template>
+                </v-tooltip>
               </div>
 
               <div class="mt-4">

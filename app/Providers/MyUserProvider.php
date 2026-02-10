@@ -26,6 +26,12 @@ class MyUserProvider implements UserProvider
         if ($response->getStatusCode() === 200) {
 
             $userData = json_decode($response->getBody(), true);
+            
+            // Ensure $userData is a valid array before proceeding
+            if (!is_array($userData)) {
+                return null;
+            }
+            
             // Optionally, you can store the token in a cookie or session
             $token = \data_get($userData, 'access_token') ?? \data_get($userData, 'token');
             $expiresIn = (int) (\data_get($userData, 'expires_in') ?? 7200); // segundos

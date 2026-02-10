@@ -4,7 +4,7 @@
 const props = defineProps({
   title: {
     type: String,
-    default: 'My Application'
+    default: 'A Era Nerd - Dashboard'
   },
   breadcrumbs: {
     type: Array,

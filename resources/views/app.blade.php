@@ -22,18 +22,18 @@
     <body class="font-sans antialiased">
         @inertia
 
-        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
  
     <!-- JavaScript Libraries -->
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
        
-        <script src="lib/easing/easing.min.js"></script>
-        <script src="lib/slick/slick.min.js"></script>
+        <script src="{{ asset('lib/easing/easing.min.js') }}"></script>
+        <script src="{{ asset('lib/slick/slick.min.js') }}"></script>
 
 
         <!-- Template Javascript -->
-        <script src="js/main.js"></script>
+        <script src="{{ asset('js/main.js') }}"></script>
 
     
     

@@ -4,6 +4,6 @@ const currentYear = new Date().getFullYear();
 
 <template>
   <v-footer app color="primary" dark>
-    <span class="white--text">&copy; {{ currentYear }} My Application</span>
+    <span class="white--text">&copy; {{ currentYear }} A Era Nerd - Dashboard</span>
   </v-footer>
 </template>
