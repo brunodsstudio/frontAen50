@@ -83,6 +83,9 @@ public function mylogin(Request $request)
         return back()->withErrors(['email' => 'Invalid credentials']);
     }
 
+    public function myloginx(Request $request){
+        return $request->all();
+    }
 
 public function logout(Request $request)
 {

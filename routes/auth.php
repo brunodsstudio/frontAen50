@@ -36,6 +36,8 @@ Route::middleware('guest')->group(function () {
     //Route::post('login', [AuthenticatedSessionController::class, 'store']);
      Route::post('login', [AuthProxyController::class, 'mylogin'])->name('loginaction');
 
+    Route::post('loginx', [AuthProxyController::class, 'myloginx'])->name('loginactionx');
+
     Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])
         ->name('password.request');
 
