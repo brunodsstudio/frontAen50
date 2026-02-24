@@ -17,18 +17,11 @@ use App\Http\Middleware\RequireJwt;
 
 
 
-
-
-
-    
-
     Route::get('register', [RegisteredUserController::class, 'create'])
         ->name('register');
 
     Route::post('register', [RegisteredUserController::class, 'store']);
-    Route::get('blogin', function () {
-        return view('auth.blogin');
-    })->name('blogin');
+ 
 
     Route::get('login', [AuthenticatedSessionController::class, 'create'])
         ->name('login');

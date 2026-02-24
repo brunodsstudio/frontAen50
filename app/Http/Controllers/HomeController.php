@@ -129,4 +129,15 @@ class HomeController extends Controller
         //dd($thisViewAssign);
         return view('pages.home',$thisViewAssign );
     }
+
+    
+    public function showteste(Request $request): View{
+        dd($request->all());
+    }
+
+   public function showLogin()
+    {
+        //return Inertia::render('Auth/Login');
+    }
+
 }
