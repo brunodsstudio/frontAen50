@@ -87,6 +87,23 @@ public function mylogin(Request $request)
         return $request->all();
     }
 
+    public function showLoginTeste()
+    {
+        return view('auth.loginteste');
+    }
+
+    public function loginTeste(Request $request)
+    {
+        $validated = $request->validate([
+            'nome' => ['required', 'string', 'regex:/^[^\s]+\s[^\s]+$/'],
+            'email' => 'required|email',
+        ], [
+            'nome.regex' => 'O nome deve conter nome e sobrenome separados por um espaço.',
+        ]);
+
+        dd($request);
+    }
+
 public function logout(Request $request)
 {
     // Opcional: chamar /auth/logout na API

@@ -73,6 +73,10 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 
+// Rotas de teste de login
+Route::get('/loginteste', [App\Http\Controllers\AuthJWT\AuthProxyController::class, 'showLoginTeste'])->name('loginteste.show');
+Route::post('/loginteste', [App\Http\Controllers\AuthJWT\AuthProxyController::class, 'loginTeste'])->name('loginteste.post');
+
 // Galeria proxy route - server-side request to API
 Route::get('/galeria-proxy/{pastaS3}/{pagina}', [App\Http\Controllers\MateriaController::class, 'galeriaProxy'])
     ->name('galeria.proxy')
