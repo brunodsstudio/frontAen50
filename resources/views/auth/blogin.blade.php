@@ -33,7 +33,7 @@
                             </div>
                         @endif
 
-                        <form method="POST" action="{{ route('loginteste.post') }}">
+                        <form method="POST" action="/loginteste">
                             <input type="hidden" name="_token" value="{{ csrf_token() }}" />
 
                             <div class="form-group">

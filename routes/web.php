@@ -29,7 +29,7 @@ Route::get('/home', [HomeController::class, 'show'])->name('home');
 
 Route::post('/loginteste', function () {
     return 'Hello World';
-})->name('loginteste.post');
+});
 
 Route::get('blogin', function () {
         return view('auth.blogin');
