@@ -24,7 +24,13 @@ Route::get('/home', [HomeController::class, 'show'])->name('home');
 
 // Rotas de teste de login
 //Route::get('/loginteste', [App\Http\Controllers\AuthJWT\AuthProxyController::class, 'showLoginTeste'])->name('loginteste.show');
-Route::post('/loginteste', [HomeController::class, 'showteste'])->name('loginteste.post');
+
+//Route::post('/loginteste', [HomeController::class, 'showteste'])->name('loginteste.post');
+
+Route::post('/loginteste', function () {
+    return 'Hello World';
+})->name('loginteste.post');
+
 Route::get('blogin', function () {
         return view('auth.blogin');
     })->name('blogin');
