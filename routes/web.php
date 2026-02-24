@@ -57,7 +57,7 @@ Route::group(['prefix' => 'admin'], function () {
 });
 
 
-
+/*
 
 Route::middleware([RequireJwt::class])->group(function () {
     Route::get('/dashboard', fn() => Inertia::render('Dashboard'))->name('dashboard');
@@ -75,9 +75,7 @@ Route::middleware([RequireJwt::class])->group(function () {
     Route::get('/dashboard/escritores/editar/{id}', fn($id) => Inertia::render('Dashboard/Escritores/Form', ['id' => $id]))->name('dashboard.escritores.editar');
 });
 
-/*Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');*/
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -102,4 +100,4 @@ Route::get('/{categoria}', [CategoriaController::class, 'show'])->name('categori
 
 // Rota para matéria específica (catch-all - deve ser a última)
 Route::get('/{linkTitulo}', [App\Http\Controllers\MateriaController::class, 'show'])
-    ->name('materia.show');
+    ->name('materia.show');*/
