@@ -56,7 +56,7 @@ Route::group(['prefix' => 'admin'], function () {
     })->name('crop');
 });
 
-require __DIR__.'/auth.php';
+//require __DIR__.'/auth.php';
 
 /*
 Route::middleware([RequireJwt::class])->group(function () {
